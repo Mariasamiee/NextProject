@@ -1,52 +1,76 @@
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import api from "../{core}/config/api"; 
-import { Product } from "../{components}/types/product";
+import Link from "next/link";
+import { RootState } from "../{lib}/store";
+import Icons from "../{components}/Icons/Icon";
 
-export default function ProductsPage() {
+function ProductsPage() {
+  const products = useSelector((state: RootState) => state.product.items)
   const router = useRouter();
-  const { category } = router.query;
+  const { category } = router.query
 
-  const [products, setProducts] = useState<Product[]>([]);
-  const [filtered, setFiltered] = useState<Product[]>([]);
+  const filteredProducts = category
+    ? products.filter((p) => p.category === category) : products
 
-  // گرفتن همه محصولات
+  const itemsPerPage = 12;
+  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage)
+  const [currentPage, setCurrentPage] = useState(1)
+
+  const startIndex = (currentPage - 1) * itemsPerPage
+  const currentProducts = filteredProducts.slice(startIndex, startIndex + itemsPerPage)
+
   useEffect(() => {
-    api.get("/products")
-      .then((res) => {
-        setProducts(res.data);
-        setFiltered(res.data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+    setCurrentPage(1)
+  }, [category])
 
-  // فیلتر بر اساس category
-  useEffect(() => {
-    if (category) {
-      setFiltered(
-        products.filter(
-          (item) => item.category === category
-        )
-      );
-    } else {
-      setFiltered(products);
-    }
-  }, [category, products]);
+  const handlePrev = () => {
+    if (currentPage > 1) setCurrentPage(currentPage - 1)
+  }
+
+  const handleNext = () => {
+    if (currentPage < totalPages) setCurrentPage(currentPage + 1)
+  }
 
   return (
-    <div className="max-w-7xl mx-auto px-8">
-      <h1 className="text-3xl font-bold mb-8">
-        Products {category && `- ${category}`}
-      </h1>
+    <div className="mt-5 mb-5">
+      <p className="max-w-7xl mx-auto px-8 text-2xl font-bold mb-6 ">
+        {category ? category : "All Products"}
+      </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {filtered.map((item) => (
-          <div key={item.id} className="border rounded-xl p-4">
-            <h2 className="font-bold">{item.title}</h2>
-            <p className="text-sm text-gray-500">{item.price}$</p>
-          </div>
+      <div className="max-w-7xl mx-auto px-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {currentProducts.map((item) => (
+          <Link key={item.id} href={`/Products/${item.id}`}>
+            <div className="rounded-2xl flex flex-col w-70 text-[#4B5563]" >
+              <img src={item.img} alt={item.title} className="w-full h-82.5 object-cover rounded-2xl" />
+              <div className="flex justify-between items-center mt-3 font-bold text-[#111827]">
+                <p >{item.title}</p>
+                <p >${item.price}</p>
+              </div>
+
+              <p className=" text-sm">{item.category}</p>
+
+              <div className="mt-2 flex items-center text-sm gap-1">
+                <Icons icon="star" />
+                <p>{item.rating}</p>
+                <p>({item.reviews})</p>
+              </div>
+            </div>
+          </Link>
         ))}
       </div>
+
+      <div className="flex justify-center mt-6 gap-4">
+        <button onClick={handlePrev} disabled={currentPage === 1} className="cursor-pointer " >
+          <Icons icon="prev" />
+        </button>
+        <span className="flex items-center">{currentPage} / {totalPages}</span>
+        <button onClick={handleNext} disabled={currentPage === totalPages} className="cursor-pointer">
+          <Icons icon="next" />
+        </button>
+      </div>
     </div>
-  );
+  )
 }
+
+export default ProductsPage

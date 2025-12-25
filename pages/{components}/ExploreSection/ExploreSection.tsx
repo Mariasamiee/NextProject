@@ -1,12 +1,10 @@
 import { useState } from "react";
 import { features, categories } from "../../{core}/Arrays";
 import Icons from "../Icons/Icon";
+import Link from "next/link";
 
-interface Props {
-  SelectCategory: (category: string) => void;
-} 
 
-function ExploreSection({ SelectCategory }: Props){
+function ExploreSection(){
   const [current, setCurrent] = useState(0);
   const visibleSlides = 3;
   const totalPages = Math.ceil(categories.length / visibleSlides);
@@ -28,7 +26,7 @@ function ExploreSection({ SelectCategory }: Props){
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-8 mt-25">
+      <div className="max-w-7xl mx-auto px-8 mt-35">
         <p className="text-4xl font-bold text-[#111827]">
           Start exploring.
           <span className="text-[#4B5563] font-semibold">
@@ -45,7 +43,7 @@ function ExploreSection({ SelectCategory }: Props){
                 pageIndex * visibleSlides,
                 pageIndex * visibleSlides + visibleSlides
               ).map((item) => (
-                <div key={item.id}  onClick={() => SelectCategory(item.title)} className="rounded-2xl border-2 border-[#E5E7EB] py-6 px-8 flex items-center justify-between hover:shadow-md transition  cursor-pointer" >
+                <Link key={item.id}  href={`/Products?category=${encodeURIComponent(item.title)}`} className="rounded-2xl border-2 border-[#E5E7EB] py-6 px-8 flex items-center justify-between hover:shadow-md transition  cursor-pointer" >
                   <div>
                     <p className="font-bold text-[24px]">{item.title}</p>
                     <p className="text-sm font-semibold text-[#4B5563]"> {item.subtitle} </p>
@@ -53,7 +51,7 @@ function ExploreSection({ SelectCategory }: Props){
                   <button className="text-sm font-medium text-[#111827] flex items-center gap-2">
                     SHOP NOW <Icons icon="flash" />
                   </button>
-                </div>
+                </Link>
               ))}
             </div>
           ))}
@@ -64,6 +62,7 @@ function ExploreSection({ SelectCategory }: Props){
             <button key={idx} onClick={() => setCurrent(idx)} className={`h-2 rounded-full transition-all cursor-pointer ${current === idx ? "w-2 bg-black" : "w-2 bg-gray-300"}`} />
           ))}
         </div>
+
       </div>
     </div>
   )

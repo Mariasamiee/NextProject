@@ -25,3 +25,29 @@ export const categories = [
   { id: 3, title: "Accessories", subtitle: "Explore accessories" },
 ]
 
+export interface Product {
+  id: string;
+  title: string;
+  price: number;
+  rating: number;
+  reviews: number;
+  category: string;
+  size: string;
+  img: string;
+}
+
+export const products: Product[] = Array.from({ length: 50 }, (_, i) => ({
+  id: String(i + 1),
+  title: "Black Automatic Watch",
+  price: 169.99,
+  rating: 4.9,
+  reviews: 98,
+  category:
+    i % 3 === 0
+      ? "Accessories"
+      : i % 3 === 1
+        ? "For Men's"
+        : "For Women's",
+  size: "S",
+  img: "/images/image.png",
+}));

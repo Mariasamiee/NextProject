@@ -1,21 +1,17 @@
-import { useRouter } from "next/router";
 import ExploreSection from "../../{components}/ExploreSection/ExploreSection"
 import Header from "../../{components}/Header/Header"
+import ProductH from "@/pages/{components}/ProductsH/ProductsH"
+import ProductH2 from "@/pages/{components}/ProductH2/ProductH2"
 
 function HomePage() {
-       const router = useRouter();
-
-  const handleSelectCategory = (category: string) => {
-    router.push({
-      pathname: "/products",
-      query: { category },
-    });
-  };
+     
 
     return (
         <>
             <Header />
-            <ExploreSection SelectCategory={handleSelectCategory}/>
+            <ExploreSection/>
+            <ProductH/>
+            <ProductH2/>
         </>
     )
 }
