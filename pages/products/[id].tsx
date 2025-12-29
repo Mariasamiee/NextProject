@@ -15,6 +15,12 @@ function ProductDetails() {
 
     return (
         <div className="rounded-2xl flex flex-col text-[#4B5563] p-8 max-w-7xl mx-auto" >
+            <div>
+                <img src={product.img1} alt="" />
+                <img src={product.img2} alt="" />
+                <img src={product.img3} alt="" />
+                <img src={product.img4} alt="" />
+            </div>
             <img src={product.img} alt={product.title} className="w-87.5 h-96 object-cover rounded-2xl" />
             <div className="flex gap-5 items-center mt-3 font-bold text-[#111827]">
                 <p >{product.title}</p>

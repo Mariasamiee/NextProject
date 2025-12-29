@@ -20,15 +20,8 @@ function Header() {
           <div className="absolute inset-0" />
 
           <div className="flex-1 max-w-xl text-left mb-6 md:mb-0 px-8">
-            <p className="text-[16px] text-[#4B5563] mb-4">
-              {slide.price}
-            </p>
-
-            <p className="text-4xl md:text-5xl font-bold leading-tight mb-6">
-              {slide.title}
-              <br />
-              {slide.subtitle}
-            </p>
+            <p className="text-[16px] text-[#4B5563] mb-4">{slide.price}</p>
+            <p className="text-4xl md:text-5xl font-bold leading-tight mb-6">{slide.title} <br /> {slide.subtitle}</p>
 
             <button className="bg-[#0f172a] text-white px-8 py-4 rounded-full flex items-center gap-3 justify-start">
               {slide.button}

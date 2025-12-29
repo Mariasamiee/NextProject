@@ -1,17 +1,22 @@
-import { useState } from "react";
-import { features, categories } from "../../{core}/Arrays";
-import Icons from "../Icons/Icon";
-import Link from "next/link";
+import { useState } from "react"
+import { categories, features } from "../../{core}/Arrays"
+import Icons from "../Icons/Icon"
+import Link from "next/link"
+import { useDispatch } from "react-redux"
+import { setCategory } from "@/pages/{lib}/features/productSlice"
 
+function ExploreSection() {
+  const [current, setCurrent] = useState(0)
+  const dispatch = useDispatch()
+  const visibleSlides = 3
+  const totalPages = Math.ceil(categories.length / visibleSlides)
 
-function ExploreSection(){
-  const [current, setCurrent] = useState(0);
-  const visibleSlides = 3;
-  const totalPages = Math.ceil(categories.length / visibleSlides);
+  const handleClick = (category: string) => {
+    dispatch(setCategory(category))
+  }
 
   return (
     <div className="mt-12">
-
       <div className="max-w-7xl mx-auto px-8">
         <div className="rounded-2xl border-2 border-[#E5E7EB] grid grid-cols-1 md:grid-cols-4  divide-x-2 divide-[#E5E7EB] divide-dashed">
           {features.map((item) => (
@@ -43,10 +48,10 @@ function ExploreSection(){
                 pageIndex * visibleSlides,
                 pageIndex * visibleSlides + visibleSlides
               ).map((item) => (
-                <Link key={item.id}  href={`/Products?category=${encodeURIComponent(item.title)}`} className="rounded-2xl border-2 border-[#E5E7EB] py-6 px-8 flex items-center justify-between hover:shadow-md transition  cursor-pointer" >
+                <Link key={item.id} href={`/Products?category=${encodeURIComponent(item.title)}`} onClick={() => handleClick(item.title)} className="rounded-2xl border-2 border-[#E5E7EB] py-6 px-8 flex items-center justify-between hover:shadow-md transition  cursor-pointer" >
                   <div>
                     <p className="font-bold text-[24px]">{item.title}</p>
-                    <p className="text-sm font-semibold text-[#4B5563]"> {item.subtitle} </p>
+                    <p className="text-sm font-semibold text-[#4B5563]">{item.subtitle}</p>
                   </div>
                   <button className="text-sm font-medium text-[#111827] flex items-center gap-2">
                     SHOP NOW <Icons icon="flash" />
@@ -62,7 +67,6 @@ function ExploreSection(){
             <button key={idx} onClick={() => setCurrent(idx)} className={`h-2 rounded-full transition-all cursor-pointer ${current === idx ? "w-2 bg-black" : "w-2 bg-gray-300"}`} />
           ))}
         </div>
-
       </div>
     </div>
   )

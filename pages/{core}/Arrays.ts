@@ -26,21 +26,35 @@ export const categories = [
 ]
 
 export interface Product {
-  id: string;
-  title: string;
-  price: number;
-  rating: number;
-  reviews: number;
-  category: string;
-  size: string;
-  img: string;
+  id: string
+  title: string
+  price: number
+  rating: number
+  reviews: number
+  category: "Accessories" | "For Men's" | "For Women's"
+  size: string
+  img: string
+  img1: string
+  img2: string
+  img3: string
+  img4: string
 }
 
 export const products: Product[] = Array.from({ length: 50 }, (_, i) => ({
   id: String(i + 1),
   title: "Black Automatic Watch",
-  price: 169.99,
-  rating: 4.9,
+  price:
+    i % 3 === 0
+      ? 169.99
+      : i % 3 === 1
+        ? 180.99
+        : 140.99,
+  rating:
+    i % 3 === 0
+      ? 5.9
+      : i % 3 === 1
+        ? 3.9
+        : 4.9,
   reviews: 98,
   category:
     i % 3 === 0
@@ -50,4 +64,14 @@ export const products: Product[] = Array.from({ length: 50 }, (_, i) => ({
         : "For Women's",
   size: "S",
   img: "/images/image.png",
-}));
+  img1: "/images/img1.png",
+  img2: "/images/img2.png",
+  img3: "/images/img3.png",
+  img4: "/images/img4.png",
+}))
+
+export const productCategories = [
+  { label: "Men's fashion", value: "For Men's" },
+  { label: "Women's fashion", value: "For Women's" },
+  { label: "Accessories", value: "Accessories" },
+]
