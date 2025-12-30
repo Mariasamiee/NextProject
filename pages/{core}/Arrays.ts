@@ -70,8 +70,3 @@ export const products: Product[] = Array.from({ length: 50 }, (_, i) => ({
   img4: "/images/img4.png",
 }))
 
-export const productCategories = [
-  { label: "Men's fashion", value: "For Men's" },
-  { label: "Women's fashion", value: "For Women's" },
-  { label: "Accessories", value: "Accessories" },
-]

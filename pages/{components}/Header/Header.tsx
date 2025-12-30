@@ -32,8 +32,8 @@ function Header() {
       ))}
 
       <div className="absolute bottom-4 left-6 md:left-1/2 md:-translate-x-1/2 flex gap-2 z-20">
-        {headerSlides.map((_, idx) => (
-          <button key={idx} onClick={() => setCurrent(idx)} className={`h-2 rounded-full transition-all duration-300  cursor-pointer ${idx === current ? "bg-black w-9" : "bg-black/50 w-2"}`} />
+        {headerSlides.map((_, index) => (
+          <button key={index} onClick={() => setCurrent(index)} className={`h-2 rounded-full transition-all duration-300  cursor-pointer ${index === current ? "bg-black w-9" : "bg-black/50 w-2"}`} />
         ))}
       </div>
     </div>
