@@ -63,8 +63,8 @@ function ExploreSection() {
         </div>
 
         <div className="flex justify-center gap-2 mt-8">
-          {Array.from({ length: totalPages }).map((_, idx) => (
-            <button key={idx} onClick={() => setCurrent(idx)} className={`h-2 rounded-full transition-all cursor-pointer ${current === idx ? "w-2 bg-black" : "w-2 bg-gray-300"}`} />
+          {Array.from({ length: totalPages }).map((_, index) => (
+            <button key={index} onClick={() => setCurrent(index)} className={`h-2 rounded-full transition-all cursor-pointer ${current === index ? "w-2 bg-black" : "w-2 bg-gray-300"}`} />
           ))}
         </div>
       </div>

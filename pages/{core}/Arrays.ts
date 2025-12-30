@@ -70,3 +70,11 @@ export const products: Product[] = Array.from({ length: 50 }, (_, i) => ({
   img4: "/images/img4.png",
 }))
 
+export const heroBanner = {
+  badge: "100% Original Products",
+  title: "The All New Fashion\nCollection Items",
+  price: "Starting from: $59.99",
+  buttonText: "Shop now",
+  image: "/images/bg-image.png",
+}
+

@@ -61,7 +61,10 @@ function ProductsPage() {
               <Link key={item.id} href={`/Products/${item.id}`}>
                 <div className="rounded-2xl flex flex-col w-70 text-[#4B5563] cursor-pointer">
 
-                  <img src={item.img} alt={item.title} className="w-full h-82.5 object-cover rounded-2xl" />
+                  <div className="relative">
+                    <Icons icon="addcart" className="absolute top-3 right-3 z-10 block" />
+                    <img src={item.img} alt={item.title} className="w-full h-82.5 object-cover rounded-2xl" />
+                  </div>
 
                   <div className="flex justify-between items-center mt-3 font-bold text-[#111827]">
                     <p>{item.title}</p>
