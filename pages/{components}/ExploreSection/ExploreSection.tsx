@@ -48,7 +48,7 @@ function ExploreSection() {
                 pageIndex * visibleSlides,
                 pageIndex * visibleSlides + visibleSlides
               ).map((item) => (
-                <Link key={item.id} href={`/Products?category=${encodeURIComponent(item.title)}`} onClick={() => handleClick(item.title)} className="rounded-2xl border-2 border-[#E5E7EB] py-6 px-8 flex items-center justify-between hover:shadow-md transition  cursor-pointer" >
+                <Link key={item.id} href={`/Products?category=${item.title}`} onClick={() => handleClick(item.title)} className="rounded-2xl border-2 border-[#E5E7EB] py-6 px-8 flex items-center justify-between hover:shadow-md transition  cursor-pointer" >
                   <div>
                     <p className="font-bold text-[24px]">{item.title}</p>
                     <p className="text-sm font-semibold text-[#4B5563]">{item.subtitle}</p>

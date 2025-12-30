@@ -34,7 +34,6 @@ export interface Product {
   category: "Accessories" | "For Men's" | "For Women's"
   size: string
   img: string
-  img1: string
   img2: string
   img3: string
   img4: string
@@ -63,11 +62,10 @@ export const products: Product[] = Array.from({ length: 50 }, (_, i) => ({
         ? "For Men's"
         : "For Women's",
   size: "S",
-  img: "/images/image.png",
-  img1: "/images/img1.png",
-  img2: "/images/img2.png",
-  img3: "/images/img3.png",
-  img4: "/images/img4.png",
+  img: "/images/image.jpg",
+  img2: "/images/img2.jpg",
+  img3: "/images/img3.jpg",
+  img4: "/images/img4.jpg",
 }))
 
 export const heroBanner = {
