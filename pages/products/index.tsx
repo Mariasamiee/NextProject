@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { RootState } from "@/pages/{lib}/store"
-import { setCategory } from "@/pages/{lib}/features/productSlice"
+import { setCategory, addToCart, increaseQty, decreaseQty } from "@/pages/{lib}/features/productSlice"
 import Link from "next/link"
 import Icons from "@/pages/{components}/Icons/Icon"
 import CategoryFilter from "@/pages/{components}/CategoryFilter/CategoryFilter"
@@ -14,6 +14,7 @@ function ProductsPage() {
 
   const products = useSelector((state: RootState) => state.product.items)
   const selectedCategory = useSelector((state: RootState) => state.product.selectedCategory)
+  const cartItems = useSelector((state: RootState) => state.product.cart.items)
 
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 12
@@ -36,6 +37,8 @@ function ProductsPage() {
     setCurrentPage(1)
   }, [selectedCategory, products.length])
 
+  const getCartItem = (productId: string) => cartItems.find(i => i.product.id === productId)
+
   return (
     <div className="mt-5 mb-16">
       <p className="max-w-7xl mx-auto px-8 text-2xl font-bold mb-6">
@@ -57,12 +60,11 @@ function ProductsPage() {
 
         <div className="lg:col-span-3">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {currentProducts.map(item => (
-              <Link key={item.id} href={`/Products/${item.id}`}>
-                <div className="rounded-2xl flex flex-col w-70 text-[#4B5563] cursor-pointer">
-
-                  <div className="relative">
-                    <Icons icon="addcart" className="absolute top-3 right-3 z-10 block" />
+            {currentProducts.map(item => {
+              const cartItem = getCartItem(item.id)
+              return (
+                <div key={item.id} className="rounded-2xl flex flex-col w-70 text-[#4B5563] cursor-pointer">
+                  <div onClick={() => router.push(`/Products/${item.id}`)} className="relative">
                     <img src={item.img} alt={item.title} className="w-full h-82.5 object-cover rounded-2xl" />
                   </div>
 
@@ -74,13 +76,31 @@ function ProductsPage() {
                   <p className="text-sm">{item.category}</p>
 
                   <div className="mt-2 flex items-center text-sm gap-1">
-                    <Icons icon="star" />
+                    <Icons icon="star" className="block" />
                     <p>{item.rating}</p>
                     <p>({item.reviews})</p>
                   </div>
+
+                  <div className=" flex items-center gap-2 translate-x-44 -translate-y-8">
+                    {cartItem ? (
+                      <div className="flex items-center gap-2 bg-[#F8F8F8] px-3 py-1 rounded-full">
+                        <button onClick={() => dispatch(decreaseQty(item.id))}>
+                          <Icons icon="decre" />
+                        </button>
+                        <span>{cartItem.quantity}</span>
+                        <button onClick={() => dispatch(increaseQty(item.id))}>
+                          <Icons icon="incre" />
+                        </button>
+                      </div>
+                    ) : (
+                      <button onClick={(e) => { e.stopPropagation(); dispatch(addToCart(item)) }}>
+                        <Icons icon="addcart" />
+                      </button>
+                    )}
+                  </div>
                 </div>
-              </Link>
-            ))}
+              )
+            })}
           </div>
         </div>
       </div>

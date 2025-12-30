@@ -7,52 +7,48 @@ import { RootState } from "@/pages/{lib}/store";
 import { addToCart, increaseQty, decreaseQty, removeFromCart, } from "@/pages/{lib}/features/productSlice";
 
 function ProductDetails() {
-  const router = useRouter();
-  const { id } = router.query;
-  const dispatch = useDispatch();
+    const router = useRouter();
+    const { id } = router.query;
+    const dispatch = useDispatch();
 
-  // اطمینان از آماده بودن router و اینکه id موجود و string هست
-  if (!router.isReady || !id || Array.isArray(id)) return null;
+    if (!router.isReady || !id || Array.isArray(id)) return null;
 
-  const productId = id; // string
+    const productId = id;
 
-  // پیدا کردن محصول
-  const product = products.find((p) => p.id === productId);
-  if (!product) return null;
+    const product = products.find((p) => p.id === productId);
+    if (!product) return null;
 
-  // وضعیت تصاویر و سایز
-  const [activeImg, setActiveImg] = useState(product.img);
-  const [size, setSize] = useState("S");
+    const [activeImg, setActiveImg] = useState(product.img);
+    const [size, setSize] = useState("S");
 
-  // پیدا کردن محصول در سبد خرید
-  const cartItem = useSelector((state: RootState) =>
-    state.product.cart.items.find((i) => i.product.id === productId)
-  );
-  const count = cartItem?.quantity || 1;
+    const cartItem = useSelector((state: RootState) =>
+        state.product.cart.items.find((i) => i.product.id === productId)
+    );
+    const count = cartItem?.quantity || 1;
 
-  useEffect(() => {
-    setActiveImg(product.img);
-  }, [product]);
+    useEffect(() => {
+        setActiveImg(product.img);
+    }, [product]);
 
-  const images = [product.img, product.img2, product.img3, product.img4];
+    const images = [product.img, product.img2, product.img3, product.img4];
 
-  const handleAddToCart = () => {
-    dispatch(addToCart(product));
-  };
+    const handleAddToCart = () => {
+        dispatch(addToCart(product));
+    };
 
-  const handleIncrement = () => {
-    if (cartItem) {
-      dispatch(increaseQty(productId)); // string
-    } else {
-      dispatch(addToCart(product));
-    }
-  };
+    const handleIncrement = () => {
+        if (cartItem) {
+            dispatch(increaseQty(productId));
+        } else {
+            dispatch(addToCart(product));
+        }
+    };
 
-  const handleDecrement = () => {
-    if (cartItem) {
-      dispatch(decreaseQty(productId)); // string
-    }
-  };
+    const handleDecrement = () => {
+        if (cartItem) {
+            dispatch(decreaseQty(productId));
+        }
+    };
 
     return (
         <div className="max-w-7xl mx-auto px-8 pt-10 pb-20">
@@ -182,12 +178,9 @@ function ProductDetails() {
                         <div key={item.id} className="rounded-2xl flex flex-col text-[#4B5563]">
 
                             <div className="relative">
-                               <button
-  onClick={() => dispatch(addToCart(product))}
-  className="absolute top-3 right-3 z-10"
->
-  <Icons icon="addcart" className="block" />
-</button>
+                                <button className="absolute top-3 right-3 z-10" >
+                                    <Icons icon="addcart" className="block" />
+                                </button>
 
                                 <img src={item.img} alt={item.title} className="w-full h-82.5 object-cover rounded-2xl" />
                             </div>

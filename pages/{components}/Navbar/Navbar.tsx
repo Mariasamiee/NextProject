@@ -1,8 +1,16 @@
 import { useState } from "react";
 import Icons from "../Icons/Icon";
+import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
+import { RootState } from "@/pages/{lib}/store";
 
 function Navbar() {
   const [open, setOpen] = useState(false);
+  const router = useRouter();
+
+  const cartItemsCount = useSelector((state: RootState) =>
+    state.product.cart.items.reduce((sum, item) => sum + item.quantity, 0)
+  )
 
   return (
     <div className="w-full border-b border-[#E7E7E7]">
@@ -24,7 +32,14 @@ function Navbar() {
 
         <div className="hidden md:flex items-center gap-6">
           <Icons icon="profile" />
-          <Icons icon="cart" />
+          <button onClick={() => router.push("/checkout")} className="relative cursor-pointer">
+            <Icons icon="cart" />
+            {cartItemsCount > 0 && (
+              <span className="absolute -top-2 -right-2 bg-blue-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
+                {cartItemsCount}
+              </span>
+            )}
+          </button>
         </div>
 
         <button className="md:hidden" onClick={() => setOpen(!open)} >
@@ -44,7 +59,14 @@ function Navbar() {
       {open && (
         <div className="md:hidden border-t border-[#E7E7E7] px-4 py-4 space-y-4">
           <Icons icon="profile" />
-          <Icons icon="cart" />
+          <button onClick={() => router.push("/checkout")} className="relative cursor-pointer">
+            <Icons icon="cart" />
+            {cartItemsCount > 0 && (
+              <span className="absolute -top-2 -right-2 bg-blue-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
+                {cartItemsCount}
+              </span>
+            )}
+          </button>
         </div>
       )}
     </div>
